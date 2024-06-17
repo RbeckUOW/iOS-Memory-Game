@@ -10,13 +10,12 @@ import SwiftData
 import Foundation
 
 struct ContentView: View {
+    let emojis = ["😂", "😏", "😇", "🥹"] // Array for emoji display
     var body: some View {
         HStack {
-            // Call the CardView struct into this stack
-            CardView(isFaceUp: true)
-            CardView()
-            CardView()
-            CardView()
+            ForEach(emojis.indices, id: \.self) { index in
+                CardView(content: emojis[index])
+            } // For each entry in the emojis array, create a card
         }
         .foregroundColor(.orange)
         .padding()
@@ -25,6 +24,7 @@ struct ContentView: View {
 }
 
 struct CardView: View {
+    let content: String // Force variable content to display the entered string
     @State var isFaceUp = false // Default to face down
     
     var body: some View {
@@ -33,7 +33,7 @@ struct CardView: View {
             if isFaceUp { // Conditionals if the card is considered face up
                     base.fill(.white)
                     base.strokeBorder(lineWidth: 2)
-                Text("😏") .font(.largeTitle)
+                Text(content) .font(.largeTitle)
                     
             } else { // If card is face down
                 base.fill()
